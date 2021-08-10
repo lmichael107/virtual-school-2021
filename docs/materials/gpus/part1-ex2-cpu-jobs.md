@@ -14,8 +14,9 @@ work in both enviroments automatically, so if your code runs too slow on CPUs,
 moving to GPUs should be easy.
 
 To submit our job, we need a submit file and a job wrapper script. The
-submit file is a basic OSGConnect flavored HTCondor file, specifying that
-we want the job to run in a container. `cpu-job.submit` contains:
+submit file is an HTCondor file specifying that
+we want the job to run in a container. Note `request_gpus = 0`, as we want
+this job to use only CPU resources. The submit file, `cpu-job.submit`, is as follows:
 
     universe = vanilla
 
@@ -61,8 +62,7 @@ we want the job to run in a container. `cpu-job.submit` contains:
     queue 1
 
 
-And job-wrapper.sh:
-
+The job wrapper script, `job-wrapper.sh`, contains the following lines:
 
     #!/bin/bash
 
@@ -77,6 +77,8 @@ And job-wrapper.sh:
 
 
 The job can now be submitted with `condor_submit cpu-job.submit`. Once the job
-is done, check the files named after the job id for the outputs.
+is done, check the files named after the job id for the outputs. Where did your
+job run? Based on the logs coming from `tensorflow` can you confirm that
+the CPU was in fact used?
 
 

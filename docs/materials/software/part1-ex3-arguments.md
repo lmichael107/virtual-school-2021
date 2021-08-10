@@ -64,7 +64,7 @@ and third arguments, respectively.  Thus, in  the main command of the script,
 replace the various names with these variables: 
 
         :::bash
-        ncbi-blast-2.10.1+/bin/blastx -db $1/$1 -query $2 -out $3
+        ncbi-blast-2.12.0+/bin/blastx -db $1/$1 -query $2 -out $3
 
 	> If your wrapper script is in a different language, you should use 
 	that language's syntax for reading in variables from the command line. 
@@ -85,7 +85,7 @@ One of the downsides of this approach, is that our command has become
 harder to read. The original script contains all the information at a glance:
 
 	:::bash
-	ncbi-blast-2.10.1+/bin/blastx -db pdbaa/pdbaa -query mouse.fa -out results2.txt
+	ncbi-blast-2.12.0+/bin/blastx -db pdbaa/pdbaa -query mouse.fa -out results2.txt
 
 But our new version is more cryptic -- what is `$1`?: 
 
@@ -97,7 +97,7 @@ script and assign the argument values to them. Here is an example for our
 BLAST script: 
 
 	:::bash
-	#/bin/bash
+	#!/bin/bash
 	
 	DATABASE=$1
 	INFILE=$2

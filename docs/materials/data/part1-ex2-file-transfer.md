@@ -110,9 +110,9 @@ It's good to start with values that are a little higher than you think a test jo
 -   How much memory `blastx` would use if it loaded all of the database files *and* the query input file into memory.
 -   How much disk space will be necessary on the execute server for the executable, all input files, and all output
     files (hint: the log file only exists on the submit node).
--   whether you'd like to request some extra memory or disk space, just in case
+-   Whether you'd like to request some extra memory or disk space, just in case
 
-Look at the `log` file for your `blastx` job from Tuesday, and compare the memory and disk "Usage" to what you predicted
+Look at the `log` file for your `blastx` job from Software exercise ([1.1](../../software/part1-ex1-download)), and compare the memory and disk "Usage" to what you predicted
 from the files.
 Make sure to update the submit file with more accurate memory and disk requests (you may still want to request slightly
 more than the job actually used).
@@ -125,7 +125,7 @@ It should take a few minutes to complete, and then you can check to make sure th
 `pdbaa` database files) were copied back at the end of the job.
 
 Run a **`du -sh`** on the directory with this job's input.
-How does it compare to the directory from Tuesday, and why?
+How does it compare to the directory from Software exercise ([1.1](../../software/part1-ex1-download)), and why?
 
 Conclusions
 -----------
@@ -133,7 +133,7 @@ Conclusions
 In this exercise, you:
 
 -   Used your data requirements knowledge from the [previous exercise](../part1-ex1-data-needs) to write a job.
--   Execute the job on a remote worker node and took 
+-   Executed the job on a remote worker node and took note of the data usage.
 
 When you've completed the above, continue with the [next exercise](../part1-ex3-blast-split).
 

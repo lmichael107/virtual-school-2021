@@ -10,38 +10,56 @@ Software Exercise 3.1: Use Singularity from OSG Connect
 Background
 ----------
 
-Containers are another way to manage software installations. We don't have the time to go fully into the details of building and using containers, but can use pre-existing containers to run jobs. 
+Containers are another way to manage software installations. This guide shows how to use pre-existing containers to run jobs on the OSG.
 
-One caveat for using containers: not all systems will support them. HTCondor has built-in features for using Docker and many Open Science Grid resources have Singularity installed, but they are not always available everywhere. 
+One caveat for using containers: not all systems will support them. HTCondor has built-in features for using Docker and many OSG resources have Singularity installed, but they are not always available everywhere. 
 
 Setup
 -----
 
-Make sure you are logged into `login04.osgconnect.net` (the OSG Connect submit server for this workshop).  For this exercise we will be using Singularity containers that are hosted by OSG Connect, in a very similar way to the software modules. 
+Make sure you are logged into `login04.osgconnect.net` (the OSG Connect submit server for this workshop).  For this exercise we will be using Singularity containers that are hosted by OSG Connect. 
 
-To get an idea on what container images are available on the OSG, take a look at the directory path `/cvmfs/singularity.opensciencegrid.org/opensciencegrid`.  
 
-Job Submission
---------------
+Default Environment
+-------------------
 
-For this job, we will use the OSG Connect Ubuntu "Xenial" image. Copy a submit file you used for a previous exercise on OSG Connect and add the following lines: 
+First, let's run a job without a container to see what the typical job environment is. 
 
-	:::file
-	requirements = HAS_SINGULARITY == true
-	+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/opensciencegrid/osgvo-ubuntu-xenial:latest"
+1. Create a bash script with the following lines: 
 
-If you had other requirements in the submit file, remove them. These options will do two things: 
-
-* require that your job runs on servers that have Singularity installed and can access the OSG Connect repository of Singularity containers
-* tells the job which Singularity container to use
-
-To test and see if our job is really running in Ubuntu, use this script for the job's executable: 
-
-	:::bash
-	#!/bin/bash
+		:::bash
+		#!/bin/bash
 	
-	hostname
-	lsb_release -a
+		hostname
+		cat /etc/os-release 
+		gcc --version
+	
+	This will print out the version of Linux on the computer and the version 
+	of `gcc`, a common software compiler. 
 
-Submit the job and look at the output file. 
+1. Copy a submit file from a previous OSG Connect job and edit it so that the 
+script you just wrote is the executable. 
+
+1. Submit the job and read the standard output file when it finishes. The output 
+should indicate that the job ran on "CentOS Linux" and the version of GCC will be `4.x`.
+
+Container Environment
+---------------------
+
+Now, let's try running that same script inside a container. 
+
+1. On the OSG, containers are stored and run as Singularity container images, so the job needs to run on a server that has Singularity installed. Modify the submit file from the previous step and add (or replace) the following line: 
+
+		:::file
+		requirements = HAS_SINGULARITY == true
+
+1. For this job, we will use the OSG Connect Ubuntu "Xenial" image. The `+SingularityImage` submit file option will tell HTCondor to use this container: 
+
+		:::file
+		requirements = HAS_SINGULARITY == true
+		+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/opensciencegrid/osgvo-ubuntu-xenial:latest"
+
+1. Submit the job and look at the output file. You should see output that indicates 
+that the job was running on "Ubuntu" and has a newer version of GCC. 
+
 

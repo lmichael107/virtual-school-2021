@@ -2,14 +2,17 @@
 status: testing
 ---
 
-GPU Exercise 1.2: Running a GPU job
+GPU Exercise 1.3: Running a GPU job
 ===================================
 
-When moving the job to be run on a GPU, all we have to do is update two lines
-in the submit file: set `request_gpus` to `1` and specify a GPU enabled
-container image for `+SingularityImage`. The updated submit file can be found
-in `gpu-job.submit` with the contents:
-
+To ensure that our job runs on a resource with an available GPU, all we need to
+do is update two lines in the submit file. First, set `request_gpus = 1`. This tells
+HTCondor that a GPU is needed to run this job. Second, we need to specify a GPU
+enabled container image. This can be done by adding 
+`+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/opensciencegrid/tensorflow-gpu:2.3"`
+to the submit file. Note that in the previous section, the container image specified was not
+GPU enabled. The updated submit file with the changes mentioned above is named `gpu-job.submit`
+and contains the following contents:
 
     universe = vanilla
 
@@ -55,15 +58,20 @@ in `gpu-job.submit` with the contents:
     queue 1
 
 
-Submit a job with `condor_submit gpu-job.submit`. Once the job is complete, check
-the `.out` file for a line stating the code was run under a GPU. Something similar
+Submit this job with the command `condor_submit gpu-job.submit`. Once the job is complete, check
+the `.out` file for a line stating that the code was run with GPU. You should see something similar
 to:
 
 
     2021-02-02 23:25:19.022467: I tensorflow/core/common_runtime/eager/execute.cc:611] Executing op MatMul in device /job:localhost/replica:0/task:0/device:GPU:0
 
 
-The `GPU:0` parts shows that a GPU was found and used for the computation.
+The `GPU:0` part of the log statement above shows that a GPU was found and used for the computation.
 
+GPUs on the Open Science Pool
+-----------------------------
 
+Curious about what GPUs make up the Open Science Pool? 
+Run `condor_status -const 'gpus >= 1' -af CUDADeviceName | sort | uniq -c` to find out. 
+Which GPU models are most common? 
 

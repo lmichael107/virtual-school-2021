@@ -33,7 +33,7 @@ Setup
 
 2. Get a copy of the tutorial by running `tutorial tensorflow-containers`
 
-3. Change into the tutorial with `cd tutorial-tensorflow-containers`
+3. `cd` into the tutorial by running `cd tutorial-tensorflow-containers`
 
 
 Defining container images
@@ -96,12 +96,12 @@ Testing the container on the submit host
 Before submitting jobs to the OSG, it is always a good idea to test your code
 so that you understand runtime requirements. The containers can be tested
 on the OSGConnect submit hosts with `singularity shell`, which will drop you
-into a container and let you exlore it interactively. To explore the
+into a container and let you explore it interactively. To explore the
 Tensorflow 2.3 image, run:
 
     singularity shell /cvmfs/singularity.opensciencegrid.org/opensciencegrid/tensorflow:2.3/
 
-Note how the command line prompt changes, providing you an indicator that
+Note how the command line prompt changes, providing you with an indicator that
 you are inside the image. You can exit any time by running `exit`. Another
 important thing to note is that your `$HOME` directory is automatically
 mounted inside the interactive container - allowing you to access your
@@ -117,9 +117,9 @@ make sure tensorflow is available:
     2021-01-15 17:32:33.901735: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
     >>>
 
-Tensorflow will warn you that no GPUs where found. This is expected as we
-do not have GPUs attached to our login nodes, and it is fine as Tensorflow
-works fine with regular CPUs (slower of course).
+Tensorflow will warn you that no GPUs were found. This is expected as 
+we do not have GPUs attached to our login nodes. Tensorflow will work
+fine with just CPUs, but of course slower than if GPUs were utilized.
 
 Exit out of Python3 with `CTRL+D` and then we can run a Tensorflow testcode
 which can be found in this tutorial:
@@ -143,7 +143,7 @@ which can be found in this tutorial:
 We will again see a bunch of warnings regarding GPUs not being available, but as
 we can see by the `/job:localhost/replica:0/task:0/device:CPU:0` line, the code ran
 on one of the CPUs. When testing your own code like this, take note of how much
-memory, disk and runtime is required - it is needed in the next step.
+memory, disk and runtime is required - as these values will be needed in the next step.
 
 Once you are done with testing, use `CTRL+D` or run `exit` to exit out of
 the container. Note that you can _not_ submit jobs from within the container.

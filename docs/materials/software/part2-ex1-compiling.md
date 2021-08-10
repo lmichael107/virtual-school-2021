@@ -87,7 +87,7 @@ pascal: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically lin
 for GNU/Linux 2.6.18, not stripped
 ```
 
-Note the blue text, which clearly states that this executable (software) is statically linked. The same command run on a non-statically linked executable file would include the text `dynamically linked (uses shared libs)` instead. So with this simple verification step, which could even be run on files that you did not compile yourself, you have some further reassurance that it is safe to use on other Linux machines. (Bonus exercise: Try the `file` command on lots of other files)
+The output clearly states that this executable (software) is statically linked. The same command run on a non-statically linked executable file would include the text `dynamically linked (uses shared libs)` instead. So with this simple verification step, which could even be run on files that you did not compile yourself, you have some further reassurance that it is safe to use on other Linux machines. (Bonus exercise: Try the `file` command on lots of other files)
 
 Submit the Job
 --------------

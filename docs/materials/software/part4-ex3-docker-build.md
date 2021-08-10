@@ -10,20 +10,12 @@ Software Exercise 4.3: Building Your Own Docker Container (Beta!)
 This exercise will walk you through the steps to build your own Docker container 
 based on Python, with the `numpy` Python library added on. 
 
-Sample Script
+Sample Script and Access Point
 -------------------
 
-For this example, create a script called `rand_array.py` on `learn.chtc.wisc.edu`:
+This example uses the same script, `rand_array.py` as [Exercise 2.5](../part2-ex5-conda)
 
-	:::file
-	import numpy as np
-
-	#numpy array with random values
-	a = np.random.rand(4,2,3)
-
-	print(a)
-
-To run this script, we will need a copy of Python with the `numpy` library. 
+This exercise **must** be run on `learn.chtc.wisc.edu`
 
 Getting Set Up
 --------------
@@ -58,10 +50,10 @@ the following contents:
 		:::file
 		# Start with this image as a "base".
 		# It's as if all the commands that created that image were inserted here.
-		# Always use a specific tag like "4.7.12", never "latest"!
+		# Always use a specific tag like "4.10.3", never "latest"!
 		# The version referenced by "latest" can change, so the build will be 
 		# more stable when building from a specific version tag. 
-		FROM continuumio/miniconda:4.7.12
+		FROM continuumio/miniconda3:4.10.3
 
 		# Use RUN to execute commands inside the image as it is being built up.
 		RUN conda install --yes numpy
@@ -69,31 +61,31 @@ the following contents:
 		# RUN multiple commands together.
 		# Try to always "clean up" after yourself to reduce the final size of your image.
 		RUN apt-get update \
-		 && apt-get --yes install --no-install-recommends graphviz\
-		 && apt-get --yes clean \
-		 && rm -rf /var/lib/apt/lists/*
+ 		&& apt-get --yes install --no-install-recommends graphviz \
+ 		&& apt-get --yes clean \
+ 		&& rm -rf /var/lib/apt/lists/*
 
 	This is our specification file and provides Docker with the information it needs 
 	to build our new container. There are other options besides `FROM` and `RUN`; see 
 	the [Docker documentation](https://docs.docker.com/engine/reference/builder/) for more information. 
 
 3. Note that our container is starting from an existing container 
-`continuumio/miniconda:4.7.12`. This container is produced by the `continuumio` 
-organization; the number `4.7.12` indicates the container version. When we create our 
+`continuumio/miniconda3:4.10.3`. This container is produced by the `continuumio` 
+organization; the number `4.10.3` indicates the container version. When we create our 
 new container, we will want to use a similar naming scheme of: 
 
 		USERNAME/CONTAINER:VERSIONTAG
 
 	In what follows, you will want to replace `USERNAME` with your DockerHub user name. 
 	The `CONTAINER` name and `VERSIONTAG` are your choice; in what follows, we will 
-	use `py3-numpy` as the container name and `2020-07` as the version tag. 
+	use `py3-numpy` as the container name and `2021-08` as the version tag. 
 
 4. To build and name the new container, open a command line window on your computer 
 where you can run Docker commands. Use the `cd` command to change your working directory 
 to the build directory with the `Dockerfile` inside. 
 
 		:::console
-		$ docker build -t USERNAME/py3-numpy:2020-07 .
+		$ docker build -t USERNAME/py3-numpy:2021-08 .
 		
 	Note the `.` at the end of the command! This indicates that we're using the current 
 	directory as our build environment, including the `Dockerfile` inside. 
@@ -108,13 +100,13 @@ elsewhere, it needs to be added to a public registry like Docker Hub.
 command line:
 
 		:::console
-		$ docker push USERNAME/py3-numpy:2020-07
+		$ docker push USERNAME/py3-numpy:2021-08
 
 	If the push doesn't work, you may need to run `docker login` first, enter your 
 	Docker Hub username and password and then try the push again. 
 
 2. Once your container image is in DockerHub, you can use it in jobs as described 
-in [Exercise 4.3][/materials/sw/part4-ex3-docker]. 
+in [Exercise 4.2](../part4-ex2-docker). 
 
 > Thanks to [Josh Karpel](https://github.com/JoshKarpel/osg-school-example-dockerfile) for 
-providing the sample `Dockerfile`!
+providing the original sample `Dockerfile`!

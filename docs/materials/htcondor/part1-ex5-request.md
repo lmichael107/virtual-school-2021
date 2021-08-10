@@ -109,13 +109,13 @@ and run it once with HTCondor, starting with somewhat high memory requests ("1GB
 When it is done, examine the log file. In particular, we care about these lines:
 
 ``` file
-    Partitionable Resources :    Usage  Request Allocated
-       Cpus                 :                 1         1
-       Disk (KB)            :     6739  1048576   8022934
-       Memory (MB)          :        3     1024      1024
+	Partitionable Resources :    Usage  Request Allocated
+	   Cpus                 :                 1         1
+	   Disk (KB)            :     6744  1048576   1335138
+	   Memory (MB)          :       57     1024      1024
 ```
 
-So, now we know that HTCondor saw that the job used 6,739 KB of disk (= about 6.5 MB) and 3 MB of memory!
+So, now we know that HTCondor saw that the job used 6,744 KB of disk (= about 6.5 MB) and 57 MB of memory!
 
 This is a great technique for determining the real resource needs of your job. If you think resource needs vary from run to run, submit a few sample jobs and look at all the results. And it never hurts to round up your resource requests a little, just in case your job occasionally uses more resources.
 
@@ -125,8 +125,8 @@ Setting Resource Requirements
 Once you know your job’s resource requirements, it is easy to declare them in your submit file. For example, taking our results above as an example, we might slightly increase our requests above what was used, just to be safe:
 
 ```hl_lines="1 3"
-# rounded up from 3 MB
-request_memory = 4MB  
+# rounded up from 57 MB
+request_memory = 60MB  
 # rounded up from 6.5 MB
 request_disk = 7MB  
 ```
@@ -142,4 +142,3 @@ HTCondor translates these requirements into attributes that become part of the j
 **If you still have time in this working session, Add these requirements to your submit file for the Python script, rerun the job, and confirm in the log file that your requests were used.**
 
 After changing the requirements in your submit file, did your job run successfully? If not, why?
-(Hint: HTCondor polls a job's resource use on a timer. How long are these jobs running for?)

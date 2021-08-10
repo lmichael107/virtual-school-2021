@@ -1,5 +1,5 @@
 ---
-status: in progress
+status: testing
 ---
 
 <style type="text/css"> pre em { font-style: normal; background-color: yellow; } pre strong { font-style: normal; font-weight: bold; color: #008; } </style>
@@ -23,12 +23,14 @@ Our wrapper script will be a bash script that runs several commands.
 
 1. In the same directory as the last exercise (still logged into `login04.osgconnect.net`) make a file called `run_blast.sh`. 
 
-1. The first line we'll place in the script is the basic command for running blast. Based on our previous submit file, what command needs to go into the script? Once you have an idea, check against the example below:  
+1. The first line we'll place in the script is the basic command for running blast. Based on our previous submit file, what command needs to go into the script? 
+
+1. Once you have an idea, check against the example below:  
 
         :::bash
         #!/bin/bash
         
-        ncbi-blast-2.10.1+/bin/blastx -db pdbaa/pdbaa -query mouse.fa -out results.txt 
+        ncbi-blast-2.12.0+/bin/blastx -db pdbaa/pdbaa -query mouse.fa -out results.txt 
 
 
 	!!! note 
@@ -39,7 +41,7 @@ Submit File Changes
 
 We now need to make some changes to our submit file.
 
-1. Make a copy of your previous submit file and open it. 
+1. Make a copy of your previous submit file and open it to edit. 
 
 1. Since we are now using a wrapper script, that will be our job's executable. Replace the original `blastx` exeuctable with the name of our wrapper script and comment out the arguments line.  
 
@@ -50,7 +52,7 @@ We now need to make some changes to our submit file.
 1. Note that since the `blastx` program is no longer listed as the executable, it will be need to be included in `transfer_input_files`. Instead of transferring just that program, we will transfer the original downloaded `tar.gz` file. To achieve efficiency, we'll also transfer the <span style="color:BLUE">pdbaa database</span> as the original `tar.gz` file instead of as the unzipped folder: 
 
         :::console
-        transfer_input_files = pdbaa.tar.gz, mouse.fa, ncbi-blast-2.10.1+-x64-linux.tar.gz
+        transfer_input_files = pdbaa.tar.gz, mouse.fa, ncbi-blast-2.12.0+-x64-linux.tar.gz
 
 1. If you really want to be on top of things, look at the log file for the last exercise, and update your memory and disk requests to be just slightly above the actual "Usage" values in the log. 
 
@@ -68,12 +70,12 @@ Now that our database and BLAST software are being transferred to the job as `ta
 1. The completed script `run_blast.sh` should look like this: 
 
         :::bash
-        #/bin/bash
+        #!/bin/bash
         
-        tar -xzf ncbi-blast-2.10.1+-x64-linux.tar.gz 
+        tar -xzf ncbi-blast-2.12.0+-x64-linux.tar.gz 
         tar -xzf pdbaa.tar.gz
 
-        ncbi-blast-2.10.1+/bin/blastx -db pdbaa/pdbaa -query mouse.fa -out results2.txt
+        ncbi-blast-2.12.0+/bin/blastx -db pdbaa/pdbaa -query mouse.fa -out results2.txt
 
 1.  While not strictly necessary, it's a good idea to enable executable permissions on the wrapper script, like so: 
 
